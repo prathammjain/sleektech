@@ -10,7 +10,7 @@ const heroStats = [
 
 const disciplines = [
   "AI Engineers & Automation Specialists",
-  "Full-Stack Developers",
+  "Full Stack Developers",
   "DevOps & Cloud Infrastructure",
   "Technical Architects & Product Builders",
 ];
@@ -83,8 +83,8 @@ export default function Home() {
               Who We Are, What We Do
             </h2>
             <p>
-              We are building a private network of engineers, full-stack devs, AI/ML specialists, and DevOps professionals
-              who work together under a credible brand. We take on real client work — AI automations, full-stack applications,
+              We are building a private network of engineers, full stack devs, AI/ML specialists, and DevOps professionals
+              who work together under a credible brand. We take on real client work: AI automations, full stack applications,
               and digital infrastructure.
             </p>
           </div>
@@ -109,7 +109,7 @@ export default function Home() {
           <div className="section-header">
             <h2>Do We Hire?</h2>
             <p>
-              We do not, we select. We select our members on one thing only — what they&apos;ve shipped. What they&apos;ve actually built.
+              We do not, we select. We select our members on one thing only: what they&apos;ve shipped. What they&apos;ve actually built.
             </p>
           </div>
           <div className="disciplines-grid">
@@ -130,7 +130,7 @@ export default function Home() {
             <h2>The Bar for Entry</h2>
             <p>
               One requirement. No exceptions. Proof that you have built things. A client project. A live product. A GitHub that tells
-              a real story. Share your work — we&apos;ll review it within a few days and tell you where you stand.
+              a real story. Share your work and we&apos;ll review it within a few days and tell you where you stand.
             </p>
           </div>
         </section>

@@ -48,7 +48,7 @@ export default function MembershipForm() {
             <option value="" disabled>
               Select your discipline
             </option>
-            <option value="fullstack">Full-stack Developer</option>
+            <option value="fullstack">Full Stack Developer</option>
             <option value="ai">AI Engineer</option>
             <option value="devops">DevOps Engineer</option>
             <option value="other">Other</option>
