@@ -30,7 +30,7 @@ export default function HeroWaitlist() {
             type="email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
-            placeholder="you@sleektech.in"
+            placeholder="sleektechventures@gmail.com"
             className="field flex-1"
             required
           />

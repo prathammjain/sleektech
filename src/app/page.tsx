@@ -172,7 +172,7 @@ export default function Home() {
         <ul>
           <li><a href="#hero">Waitlist</a></li>
           <li><a href="#for-businesses">For businesses</a></li>
-          <li><a href="mailto:hello@sleektech.in">hello@sleektech.in</a></li>
+          <li><a href="mailto:sleektechventures@gmail.com">sleektechventures@gmail.com</a></li>
         </ul>
         <p>© 2026 sleektech. All rights reserved.</p>
       </footer>
