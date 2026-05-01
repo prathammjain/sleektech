@@ -1,45 +1,34 @@
 "use client";
 
-import { useEffect, useRef, ReactNode } from "react";
+import { useEffect } from "react";
 
-interface ScrollRevealProps {
-  children: ReactNode;
-  className?: string;
-  delay?: number;
-  threshold?: number;
-}
-
-export default function ScrollReveal({
-  children,
-  className = "",
-  delay = 0,
-  threshold = 0.12,
-}: ScrollRevealProps) {
-  const ref = useRef<HTMLDivElement>(null);
-
+// Global scroll-reveal: any element with data-reveal gets `.is-visible` once in view.
+// Respects prefers-reduced-motion.
+export default function ScrollReveal() {
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
+    if (typeof window === "undefined") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.querySelectorAll<HTMLElement>("[data-reveal]").forEach((el) => {
+        el.classList.add("is-visible");
+      });
+      return;
+    }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            el.classList.add("reveal-visible");
-          }, delay);
-          observer.unobserve(el);
-        }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            io.unobserve(entry.target);
+          }
+        });
       },
-      { threshold }
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
     );
 
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [delay, threshold]);
+    document.querySelectorAll<HTMLElement>("[data-reveal]").forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
 
-  return (
-    <div ref={ref} className={`reveal ${className}`}>
-      {children}
-    </div>
-  );
+  return null;
 }

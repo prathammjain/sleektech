@@ -101,8 +101,8 @@ export function HeroVisual() {
 
 export function HeroWatermark() {
   return (
-    <div className="hero-watermark">
-      <svg viewBox="0 0 500 500" fill="none" stroke="#111" strokeWidth="1">
+    <div className="hero-watermark" aria-hidden="true">
+      <svg viewBox="0 0 500 500" fill="none" stroke="currentColor" strokeWidth="1">
         <circle cx="250" cy="250" r="230" strokeDasharray="4 16" strokeWidth="1.5" />
         <circle cx="250" cy="250" r="180" strokeWidth="0.5" />
         <circle cx="250" cy="250" r="130" strokeDasharray="1 8" strokeWidth="2" />
@@ -117,7 +117,7 @@ export function HeroWatermark() {
         <line x1="250" y1="50" x2="250" y2="450" strokeWidth="0.25" />
         <line x1="50" y1="250" x2="450" y2="250" strokeWidth="0.25" />
         <g transform="translate(440, 60) rotate(45)">
-          <path d="M 0 -24 C 20 -8, 12 12, 0 6 C -12 12, -20 -8, 0 -24 Z" fill="#111" />
+          <path d="M 0 -24 C 20 -8, 12 12, 0 6 C -12 12, -20 -8, 0 -24 Z" fill="currentColor" />
           <circle cx="-6" cy="-2" r="8" strokeWidth="0.5" />
           <circle cx="6" cy="-2" r="8" strokeWidth="0.5" />
           <path d="M 0 -35 L 0 20" strokeWidth="0.5" strokeDasharray="2 2" />
@@ -125,10 +125,10 @@ export function HeroWatermark() {
         </g>
         <path d="M 60 440 L 40 480 M 80 420 L 60 460" strokeWidth="2" strokeLinecap="round" />
         <path d="M 60 440 L 20 460 M 80 420 L 40 440" strokeWidth="2" strokeLinecap="round" />
-        <circle cx="120" cy="120" r="5" fill="#111" />
-        <circle cx="380" cy="380" r="5" fill="#111" />
-        <circle cx="200" cy="300" r="4" fill="#eff1f5" stroke="#111" strokeWidth="2" />
-        <circle cx="250" cy="250" r="2" fill="#111" />
+        <circle cx="120" cy="120" r="5" fill="currentColor" />
+        <circle cx="380" cy="380" r="5" fill="currentColor" />
+        <circle cx="200" cy="300" r="4" fill="var(--bg)" stroke="currentColor" strokeWidth="2" />
+        <circle cx="250" cy="250" r="2" fill="currentColor" />
       </svg>
     </div>
   );
