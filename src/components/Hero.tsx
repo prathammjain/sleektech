@@ -5,10 +5,10 @@ import ApplyModal from "./ApplyModal";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-/** Headline lines — the accented words get the flame gradient. */
+/** Headline lines. The accented words get the flame gradient. */
 const LINES: { text: string; accent?: boolean }[][] = [
-  [{ text: "We" }, { text: "build" }, { text: "AI" }],
-  [{ text: "that", accent: true }, { text: "does", accent: true }, { text: "the", accent: true }, { text: "work.", accent: true }],
+  [{ text: "We" }, { text: "build" }, { text: "software" }],
+  [{ text: "that", accent: true }, { text: "just", accent: true }, { text: "works.", accent: true }],
 ];
 
 const container: Variants = {
@@ -44,7 +44,7 @@ export default function Hero() {
           animate={reduced ? undefined : "show"}
         >
           <motion.div className="tag" variants={reduced ? undefined : fade}>
-            AI engineering collective · India + remote
+            Software engineering collective · India + remote
           </motion.div>
 
           <h1 className="hero-headline">
@@ -64,17 +64,17 @@ export default function Hero() {
           </h1>
 
           <motion.p variants={reduced ? undefined : fade}>
-            AI agents, n8n automations and chatbots wired into your stack — built and
-            run by AI-enabled teams. Production systems, not prototypes.
+            Websites, web and mobile apps, automations and the AI inside them. We
+            design, build and ship production software for teams that need execution.
           </motion.p>
 
           <motion.p className="hero-pillars" variants={reduced ? undefined : fade}>
-            Agents do the busywork. Engineers ship the judgment.
+            Design. Build. Ship. No theatre.
           </motion.p>
 
           <motion.div className="hero-cta" variants={reduced ? undefined : fade}>
-            <a href="#ai-lab" className="btn-primary" data-magnetic>
-              Watch it work →
+            <a href="#services" className="btn-primary" data-magnetic>
+              See what we build →
             </a>
             <a href="#for-companies" className="btn-primary dark">
               Start a project

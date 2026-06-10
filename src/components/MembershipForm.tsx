@@ -87,7 +87,7 @@ export default function MembershipForm() {
           <label htmlFor="mem-resume">Resume / CV</label>
           <label className="file-upload-label" htmlFor="mem-resume">
             <span className="file-upload-icon">↑</span>
-            <span>{fileName || "Upload file — PDF, DOC (optional)"}</span>
+            <span>{fileName || "Upload file (PDF or DOC, optional)"}</span>
           </label>
           <input
             type="file"

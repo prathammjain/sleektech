@@ -18,7 +18,7 @@ const script: Line[] = [
   { kind: "tool", text: "→ enrich_company(domain: acme.io)" },
   { kind: "ok", text: "✓ ACME · Series A · fintech · 80 staff" },
   { kind: "tool", text: "→ score_lead(signals)" },
-  { kind: "ok", text: "✓ score 87 / 100 — hot" },
+  { kind: "ok", text: "✓ score 87 / 100, hot lead" },
   { kind: "tool", text: "→ draft_reply() · route_to(\"sales\")" },
   { kind: "done", text: "✓ handled in 1.4s · 3 tools · 0 humans" },
 ];

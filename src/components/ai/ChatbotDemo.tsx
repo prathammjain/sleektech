@@ -16,7 +16,7 @@ const script: Msg[] = [
   { from: "user", text: "Do you build WhatsApp support bots?" },
   {
     from: "bot",
-    text: "Yes — RAG over your docs, human handoff, deployed on your own number.",
+    text: "Yes. RAG over your docs, human handoff, deployed on your own number.",
   },
   { from: "user", text: "Can it pull live order status?" },
   { from: "bot", text: "It calls your API mid-chat. Tools, not canned replies." },

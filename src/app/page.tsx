@@ -6,14 +6,14 @@ import StatsPipeline from "@/components/StatsPipeline";
 import AILab from "@/components/ai/AILab";
 
 const companySteps = [
-  { n: "01", title: "Submit your project", body: "Drop us a brief. Scope, stack, timelines — anything you have." },
-  { n: "02", title: "Get a curated team", body: "Backend, frontend, AI, DevOps — assembled around your problem." },
+  { n: "01", title: "Submit your project", body: "Drop us a brief. Scope, stack, timelines, anything you have." },
+  { n: "02", title: "Get a curated team", body: "Backend, frontend, mobile, AI, DevOps, assembled around your problem." },
   { n: "03", title: "Track progress transparently", body: "Async updates, live milestones, no monthly status theatre." },
   { n: "04", title: "Receive production-ready delivery", body: "Shipped to prod. Documented. Handed off cleanly." },
 ];
 
 const engineerSteps = [
-  { n: "01", title: "Apply & get vetted", body: "We look at what you've built — not where you went to school." },
+  { n: "01", title: "Apply & get vetted", body: "We look at what you've built, not where you went to school." },
   { n: "02", title: "Join project-based teams", body: "Slot into a small, focused squad with a real client outcome." },
   { n: "03", title: "Work async, flexible hours", body: "Moonlighting allowed. Output matters, not your calendar." },
   { n: "04", title: "Get paid per milestone", body: "Transparent payouts tied to contribution. No exclusivity." },
@@ -27,16 +27,16 @@ const differentiators = [
 ];
 
 const tickerItems = [
+  "Websites",
+  "Web Apps",
+  "Mobile Apps",
+  "SaaS Platforms",
+  "Automations",
   "AI Agents",
-  "n8n Automations",
-  "AI Chatbots",
-  "RAG Pipelines",
-  "Tool-Calling",
-  "Vector Search",
-  "AI-Enabled Teams",
-  "Workflow Automation",
-  "SaaS MVPs",
-  "Data Dashboards",
+  "Chatbots",
+  "Dashboards",
+  "Internal Tools",
+  "API Integrations",
 ];
 
 const earlyResults = [
@@ -143,7 +143,7 @@ export default function Home() {
               <div className="n-lg pricing-card" data-tilt>
                 <span className="how-pill">For Companies</span>
                 <h3>Project pricing.</h3>
-                <p>Fixed project pricing or milestone-based — agreed before we start. No hourly meter.</p>
+                <p>Fixed project pricing or milestone-based, agreed before we start. No hourly meter.</p>
                 <ul className="pricing-points">
                   <li>Scoped, fixed-price builds</li>
                   <li>Or milestone-based releases</li>
@@ -173,7 +173,7 @@ export default function Home() {
               {earlyResults.map((r) => (
                 <figure key={r.quote} className="n-card quote-card">
                   <blockquote>&ldquo;{r.quote}&rdquo;</blockquote>
-                  <figcaption>— {r.who}</figcaption>
+                  <figcaption>{r.who}</figcaption>
                 </figure>
               ))}
             </div>
@@ -186,7 +186,7 @@ export default function Home() {
               <h2>The old system is broken. This is the third option.</h2>
               <p>
                 Hiring is slow and expensive. Freelancing is chaotic and solo. SleekTech is
-                neither — small, vetted teams deployed per project, paid for what they ship.
+                neither. Small, vetted teams deployed per project, paid for what they ship.
                 Startup execution, without the headcount.
               </p>
             </div>
@@ -223,8 +223,8 @@ export default function Home() {
               <div>
                 <h2>Ready to build or earn?</h2>
                 <p>
-                  Join the collective shipping the next wave of automation, AI, and internal tools —
-                  for companies that need execution, not promises.
+                  Join the collective shipping software, apps and automation for companies
+                  that need execution, not promises.
                 </p>
               </div>
               <div className="cta-actions">

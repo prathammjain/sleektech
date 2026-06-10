@@ -14,51 +14,51 @@ type Service = {
 const services: Service[] = [
   {
     n: "01",
-    title: "AI Agents",
-    result: "Tools, not chat",
-    outcome: "Agents that call your tools, make decisions and finish the task end-to-end.",
-    capabilities: ["Tool-calling agents", "Multi-step workflows", "Evals & guardrails", "Human-in-the-loop"],
-    stack: ["Claude", "LangGraph", "MCP", "pgvector"],
+    title: "Websites & Landing Pages",
+    result: "Live in days",
+    outcome: "Fast, modern marketing sites and landing pages built to convert.",
+    capabilities: ["Design to build", "CMS & content", "SEO & analytics", "Edge performance"],
+    stack: ["Next.js", "Tailwind", "Sanity", "Vercel"],
   },
   {
     n: "02",
-    title: "n8n Automations",
-    result: "No human in the loop",
-    outcome: "Workflows that run themselves — triggers, branches, AI steps, all wired up.",
-    capabilities: ["Workflow design", "API & webhook glue", "Scheduled jobs", "Self-hosted n8n"],
-    stack: ["n8n", "Webhooks", "Cron", "REST"],
-  },
-  {
-    n: "03",
-    title: "AI Chatbots",
-    result: "Grounded in your data",
-    outcome: "Support & sales bots that know your docs and call your APIs mid-chat.",
-    capabilities: ["RAG over your docs", "WhatsApp / web / Slack", "Live API tool calls", "Human handoff"],
-    stack: ["Claude", "pgvector", "Twilio", "Next.js"],
-  },
-  {
-    n: "04",
-    title: "AI-Enabled Teams",
-    result: "Bigger team, no headcount",
-    outcome: "Squads that ship with agents in the loop — drafting, testing, monitoring.",
-    capabilities: ["Agent-augmented squads", "AI code review", "Automated QA", "24/7 monitoring"],
-    stack: ["Cursor", "CI/CD", "Sentry", "Slack"],
-  },
-  {
-    n: "05",
-    title: "SaaS MVPs & Platforms",
+    title: "Web Apps & SaaS",
     result: "~3 weeks to launch",
-    outcome: "Zero-to-one products — AI-native by default, built to scale past launch.",
-    capabilities: ["Auth & billing", "Dashboards", "Full-stack builds", "Production infra"],
+    outcome: "Full products with auth, billing and dashboards, built to scale.",
+    capabilities: ["Auth & billing", "Dashboards", "Multi-tenancy", "Production infra"],
     stack: ["Next.js", "Postgres", "Stripe", "AWS"],
   },
   {
+    n: "03",
+    title: "Mobile Apps",
+    result: "iOS + Android",
+    outcome: "One codebase, both stores, a genuinely native feel.",
+    capabilities: ["iOS & Android", "Push & deep links", "Offline first", "Store delivery"],
+    stack: ["React Native", "Expo", "Reanimated", "EAS"],
+  },
+  {
+    n: "04",
+    title: "Automations",
+    result: "Manual ops, gone",
+    outcome: "Workflows that run themselves across all your tools.",
+    capabilities: ["n8n workflows", "API & webhooks", "Scheduled jobs", "Integrations"],
+    stack: ["n8n", "Webhooks", "Cron", "REST"],
+  },
+  {
+    n: "05",
+    title: "AI Agents & Chatbots",
+    result: "Grounded in your data",
+    outcome: "Agents and bots that know your docs and call your APIs to finish tasks.",
+    capabilities: ["Tool-calling agents", "RAG chatbots", "Human handoff", "Evals & guardrails"],
+    stack: ["Claude", "pgvector", "LangGraph", "Twilio"],
+  },
+  {
     n: "06",
-    title: "Data & Dashboards",
+    title: "Data & Internal Tools",
     result: "Decision-ready",
-    outcome: "Move it, model it, surface it — plus vector search to make it AI-ready.",
-    capabilities: ["ETL / ELT", "Warehousing", "BI dashboards", "Vector search"],
-    stack: ["dbt", "BigQuery", "pgvector", "Metabase"],
+    outcome: "Pipelines, dashboards and admin tools your team actually trusts.",
+    capabilities: ["ETL / ELT", "BI dashboards", "Admin panels", "Vector search"],
+    stack: ["dbt", "BigQuery", "Metabase", "pgvector"],
   },
 ];
 
@@ -67,10 +67,10 @@ export default function ServicesShowcase() {
     <section id="services" className="section services-section">
       <Reveal as="div" className="section-header">
         <div className="tag">What we build</div>
-        <h2>AI that ships outcomes, not hours.</h2>
+        <h2>Software that ships outcomes, not hours.</h2>
         <p>
-          Agents, automations and chatbots are the core of what we do — wrapped in
-          full-stack engineering and run by teams that build with AI every day.
+          Websites, web and mobile apps, automations and AI. Tell us the problem,
+          we assemble a focused team and ship the system end to end.
         </p>
       </Reveal>
 
