@@ -1,5 +1,9 @@
 import ApplyModal, { ApplyModalProvider } from "@/components/ApplyModal";
 import BusinessForm from "@/components/BusinessForm";
+import Hero from "@/components/Hero";
+import ServicesShowcase from "@/components/ServicesShowcase";
+import StatsPipeline from "@/components/StatsPipeline";
+import AILab from "@/components/ai/AILab";
 
 const companySteps = [
   { n: "01", title: "Submit your project", body: "Drop us a brief. Scope, stack, timelines — anything you have." },
@@ -20,27 +24,19 @@ const differentiators = [
   { left: "Output", right: "Interviews" },
   { left: "Proof of work", right: "Resumes" },
   { left: "Speed", right: "Hiring cycles" },
-  { left: "Flexibility", right: "9–5" },
-];
-
-const useCases = [
-  { title: "SaaS MVPs", body: "Zero-to-one product builds with auth, billing, dashboards." },
-  { title: "AI-powered tools", body: "LLM features, RAG pipelines, custom agents wired into your stack." },
-  { title: "Internal automation", body: "Replace manual ops with workflows that actually run." },
-  { title: "Data pipelines & dashboards", body: "Move data, model it, surface it. End to end." },
-  { title: "Full-stack platforms", body: "Production-grade systems built to scale past launch." },
 ];
 
 const tickerItems = [
-  "SaaS MVPs",
   "AI Agents",
+  "n8n Automations",
+  "AI Chatbots",
   "RAG Pipelines",
-  "Internal Tools",
-  "Data Dashboards",
+  "Tool-Calling",
+  "Vector Search",
+  "AI-Enabled Teams",
   "Workflow Automation",
-  "Mobile Apps",
-  "API Integrations",
-  "DevOps & Infra",
+  "SaaS MVPs",
+  "Data Dashboards",
 ];
 
 const earlyResults = [
@@ -56,87 +52,27 @@ export default function Home() {
         <nav className="landing-nav">
           <a href="#hero" className="logo-type">SleekTech</a>
           <div className="nav-links">
-            <a href="#problem">Problem</a>
-            <a href="#solution">Solution</a>
+            <a href="#services">Services</a>
+            <a href="#ai-lab">See it work</a>
             <a href="#how">How it works</a>
-            <a href="#use-cases">What we build</a>
             <a href="#pricing">Model</a>
+            <a href="#for-companies">Contact</a>
           </div>
-          <ApplyModal triggerClassName="btn-primary" triggerLabel="Join the Collective" />
+          <a href="#for-companies" className="btn-primary">Start a project</a>
         </nav>
 
         <main>
-          {/* HERO */}
-          <section id="hero" className="hero-section">
-            <div className="hero-grid">
-              <div className="hero-copy" data-reveal>
-                <div className="tag">Engineering collective · India + remote</div>
-                <h1>
-                  Build with elite engineers.
-                  <br />
-                  Work like a startup.
-                  <br />
-                  Get paid per project.
-                </h1>
-                <p>
-                  SleekTech is a modern engineering collective where companies get execution-ready teams,
-                  and engineers earn through real-world projects — not broken hiring pipelines.
-                </p>
-                <p className="hero-pillars">
-                  No resumes. No hiring delays. Pre-vetted teams with SLEEK execution.
-                </p>
-                <div className="hero-cta">
-                  <a
-                    href="#for-companies"
-                    className="btn-primary"
-                    data-magnetic
-                  >
-                    For Companies → Hire a Team
-                  </a>
-                  <ApplyModal
-                    triggerClassName="btn-primary dark"
-                    triggerLabel="For Engineers → Join the Collective"
-                  />
-                </div>
-              </div>
-            </div>
-          </section>
+          {/* HERO — services-led */}
+          <Hero />
 
-          {/* PROBLEM */}
-          <section id="problem" className="section" data-reveal>
-            <div className="section-header">
-              <div className="tag">The problem</div>
-              <h2>The old system is broken.</h2>
-              <p>
-                Hiring is slow, expensive and unreliable. Freelancing is chaotic and solo —
-                companies do not trust random developers.
-              </p>
-            </div>
-            <p className="punchline">
-              <span className="punchline-marker" /> Everyone is stuck. No one is winning.
-            </p>
-          </section>
+          {/* SERVICES — the centerpiece */}
+          <ServicesShowcase />
 
-          {/* SOLUTION */}
-          <section id="solution" className="section" data-reveal>
-            <div className="section-header">
-              <div className="tag">The solution</div>
-              <h2>A sleek way to build and work.</h2>
-              <p>
-                SleekTech is not a company. It is a high-performance engineering network.
-              </p>
-            </div>
-            <ul className="solution-list">
-              <li>Form small, focused teams per project</li>
-              <li>Match skills → real client needs</li>
-              <li>Pay engineers based on project contribution</li>
-              <li>Enable parallel work — moonlighting allowed</li>
-              <li>Deliver production-ready outcomes, not experiments</li>
-            </ul>
-            <p className="key-line">
-              Think startup execution teams, not freelancers.
-            </p>
-          </section>
+          {/* AI LAB — live, auto-playing proof of the work */}
+          <AILab />
+
+          {/* HOW WE DELIVER — animated pipeline + stats */}
+          <StatsPipeline />
 
           {/* TICKER */}
           <div className="marquee" aria-hidden="true">
@@ -196,77 +132,12 @@ export default function Home() {
             </div>
           </section>
 
-          {/* DIFFERENTIATION */}
-          <section id="why" className="section" data-reveal>
-            <div className="section-header">
-              <div className="tag">Why it works</div>
-              <h2>Why SleekTech is different.</h2>
-            </div>
-            <div className="compare-list">
-              {differentiators.map((d) => (
-                <div key={d.left} className="compare-row">
-                  <span className="compare-left">{d.left}</span>
-                  <span className="compare-arrow">&gt;</span>
-                  <span className="compare-right">{d.right}</span>
-                </div>
-              ))}
-            </div>
-            <p className="bold-statement">
-              We don&apos;t hire engineers. We deploy them.
-            </p>
-          </section>
-
-          {/* USE CASES */}
-          <section id="use-cases" className="section" data-reveal>
-            <div className="section-header">
-              <div className="tag">Use cases</div>
-              <h2>What we build.</h2>
-            </div>
-            <div className="feature-grid">
-              {useCases.map((c) => (
-                <div key={c.title} className="n-card feature-card">
-                  <h3>{c.title}</h3>
-                  <p>{c.body}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* SOCIAL PROOF */}
-          <section id="results" className="section" data-reveal>
-            <div className="section-header">
-              <div className="tag">Early results</div>
-              <h2>Receipts beat promises.</h2>
-            </div>
-            <div className="quote-grid">
-              {earlyResults.map((r) => (
-                <figure key={r.quote} className="n-card quote-card">
-                  <blockquote>&ldquo;{r.quote}&rdquo;</blockquote>
-                  <figcaption>— {r.who}</figcaption>
-                </figure>
-              ))}
-            </div>
-          </section>
-
-          {/* COMMUNITY */}
-          <section id="community" className="section" data-reveal>
-            <div className="section-header">
-              <div className="tag">The network</div>
-              <h2>More than work. A network.</h2>
-            </div>
-            <ul className="solution-list">
-              <li>Collaborate with serious engineers</li>
-              <li>Learn by building real systems</li>
-              <li>Build a public portfolio of shipped work</li>
-            </ul>
-            <p className="key-line">Not a Discord. A battlefield.</p>
-          </section>
-
-          {/* PRICING */}
+          {/* PRICING — engagement model */}
           <section id="pricing" className="section" data-reveal>
             <div className="section-header">
               <div className="tag">Model</div>
-              <h2>Simple, transparent.</h2>
+              <h2>Simple, transparent pricing.</h2>
+              <p>Scoped before we start. No hourly meter, no surprise invoices.</p>
             </div>
             <div className="pricing-grid">
               <div className="n-lg pricing-card" data-tilt>
@@ -292,10 +163,49 @@ export default function Home() {
             </div>
           </section>
 
+          {/* SOCIAL PROOF */}
+          <section id="results" className="section" data-reveal>
+            <div className="section-header">
+              <div className="tag">Early results</div>
+              <h2>Receipts beat promises.</h2>
+            </div>
+            <div className="quote-grid">
+              {earlyResults.map((r) => (
+                <figure key={r.quote} className="n-card quote-card">
+                  <blockquote>&ldquo;{r.quote}&rdquo;</blockquote>
+                  <figcaption>— {r.who}</figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
+
+          {/* THE MODEL — compact "about" (problem + solution + why, condensed) */}
+          <section id="why" className="section about-band" data-reveal>
+            <div className="section-header">
+              <div className="tag">Why we exist</div>
+              <h2>The old system is broken. This is the third option.</h2>
+              <p>
+                Hiring is slow and expensive. Freelancing is chaotic and solo. SleekTech is
+                neither — small, vetted teams deployed per project, paid for what they ship.
+                Startup execution, without the headcount.
+              </p>
+            </div>
+            <div className="compare-list">
+              {differentiators.map((d) => (
+                <div key={d.left} className="compare-row">
+                  <span className="compare-left">{d.left}</span>
+                  <span className="compare-arrow">&gt;</span>
+                  <span className="compare-right">{d.right}</span>
+                </div>
+              ))}
+            </div>
+            <p className="key-line">We don&apos;t hire engineers. We deploy them.</p>
+          </section>
+
           {/* FOR COMPANIES — contact form */}
           <section id="for-companies" className="section" data-reveal>
             <div className="section-header">
-              <div className="tag">Hire a team</div>
+              <div className="tag">Start a project</div>
               <h2>You had an idea. We deploy a team.</h2>
               <p>Tell us what you need built. We&apos;ll come back within 24 hours with a team and a plan.</p>
             </div>
@@ -350,11 +260,11 @@ export default function Home() {
             <span>Engineering collective. Production-grade outcomes.</span>
           </div>
           <ul>
-            <li><a href="#solution">About</a></li>
+            <li><a href="#services">Services</a></li>
             <li><a href="#how">How it works</a></li>
-            <li><a href="#hero">Apply</a></li>
+            <li><a href="#for-companies">Start a project</a></li>
             <li><a href="mailto:sleektechventures@gmail.com">Contact</a></li>
-            <li><a href="#pricing">Terms</a></li>
+            <li><a href="#pricing">Model</a></li>
           </ul>
           <p>© 2026 SleekTech. All rights reserved.</p>
         </footer>

@@ -4,10 +4,40 @@ import { useState, FormEvent } from "react";
 
 export default function BusinessForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
+    setError(null);
+
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const payload = {
+      name: data.get("name"),
+      email: data.get("email"),
+      phone: data.get("phone"),
+      need: data.get("need"),
+      message: data.get("message"),
+    };
+
+    setLoading(true);
+    try {
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.error || "Something went wrong.");
+      }
+      setSubmitted(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (submitted) {
@@ -27,37 +57,22 @@ export default function BusinessForm() {
     <form onSubmit={handleSubmit} noValidate>
       <div className="form-group">
         <label htmlFor="biz-name">Full Name</label>
-        <input
-          type="text"
-          id="biz-name"
-          placeholder="Your full name"
-          required
-        />
+        <input type="text" id="biz-name" name="name" placeholder="Your full name" required />
       </div>
 
       <div className="form-group">
         <label htmlFor="biz-email">Email</label>
-        <input
-          type="email"
-          id="biz-email"
-          placeholder="you@company.com"
-          required
-        />
+        <input type="email" id="biz-email" name="email" placeholder="you@company.com" required />
       </div>
 
       <div className="form-group">
         <label htmlFor="biz-phone">Phone Number</label>
-        <input
-          type="tel"
-          id="biz-phone"
-          placeholder="+91 00000 00000"
-          required
-        />
+        <input type="tel" id="biz-phone" name="phone" placeholder="+91 00000 00000" required />
       </div>
 
       <div className="form-group">
         <label htmlFor="biz-need">What do you need built?</label>
-        <select id="biz-need" required defaultValue="">
+        <select id="biz-need" name="need" required defaultValue="">
           <option value="" disabled>
             Select a category
           </option>
@@ -73,13 +88,16 @@ export default function BusinessForm() {
         <label htmlFor="biz-message">Message</label>
         <textarea
           id="biz-message"
+          name="message"
           placeholder="Describe your problem or idea briefly."
           required
         />
       </div>
 
-      <button type="submit" className="btn-primary btn-full">
-        Send Enquiry
+      {error && <p className="form-error">{error}</p>}
+
+      <button type="submit" className="btn-primary btn-full" disabled={loading}>
+        {loading ? "Sending…" : "Send Enquiry"}
       </button>
       <p className="form-below-text">We&apos;ll respond within 24 hours.</p>
     </form>
