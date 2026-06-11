@@ -4,6 +4,7 @@ import Hero from "@/components/Hero";
 import ServicesShowcase from "@/components/ServicesShowcase";
 import StatsPipeline from "@/components/StatsPipeline";
 import AILab from "@/components/ai/AILab";
+import StudioPlayer from "@/components/StudioPlayer";
 
 const companySteps = [
   { n: "01", title: "Submit your project", body: "Drop us a brief. Scope, stack, timelines, anything you have." },
@@ -240,17 +241,7 @@ export default function Home() {
               <span className="tag">studio · always on</span>
               <p className="studio-line">On rotation while we ship.</p>
             </div>
-            <div className="studio-frame">
-              <iframe
-                title="SleekTech studio playlist"
-                src="https://open.spotify.com/embed/playlist/6fRYnkKe7qdeOcin5yt8dq?utm_source=generator&theme=0"
-                width="100%"
-                height="152"
-                loading="lazy"
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
+            <StudioPlayer />
           </section>
         </main>
 

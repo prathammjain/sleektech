@@ -35,6 +35,32 @@ export default function SiteEffects() {
     window.addEventListener("scroll", onScroll, { passive: true });
     cleanups.push(() => window.removeEventListener("scroll", onScroll));
 
+    /* ---------- Page-wide cursor glow (follows the pointer everywhere) ---------- */
+    const root = document.documentElement;
+    let gx = window.innerWidth / 2;
+    let gy = window.innerHeight * 0.3;
+    let glowQueued = false;
+    let glowRaf = 0;
+    const applyGlow = () => {
+      glowQueued = false;
+      root.style.setProperty("--gx", `${gx}px`);
+      root.style.setProperty("--gy", `${gy}px`);
+    };
+    const onGlowMove = (e: MouseEvent) => {
+      gx = e.clientX;
+      gy = e.clientY;
+      if (!glowQueued) {
+        glowQueued = true;
+        glowRaf = requestAnimationFrame(applyGlow);
+      }
+    };
+    applyGlow();
+    window.addEventListener("mousemove", onGlowMove, { passive: true });
+    cleanups.push(() => {
+      window.removeEventListener("mousemove", onGlowMove);
+      cancelAnimationFrame(glowRaf);
+    });
+
     const hero = document.querySelector<HTMLElement>(".hero-section");
     const tiltEls = Array.from(document.querySelectorAll<HTMLElement>("[data-tilt]"));
     const magEls = Array.from(document.querySelectorAll<HTMLElement>("[data-magnetic]"));
@@ -179,5 +205,10 @@ export default function SiteEffects() {
     };
   }, []);
 
-  return <div className="scroll-progress" data-progress aria-hidden="true" />;
+  return (
+    <>
+      <div className="cursor-glow" aria-hidden="true" />
+      <div className="scroll-progress" data-progress aria-hidden="true" />
+    </>
+  );
 }
