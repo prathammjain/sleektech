@@ -3,17 +3,17 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const links = [
+const links: { href: string; label: string; exact?: boolean; badgeKey?: string }[] = [
   { href: "/admin", label: "Overview", exact: true },
-  { href: "/admin/leads", label: "Leads" },
-  { href: "/admin/applications", label: "Applications" },
+  { href: "/admin/leads", label: "Leads", badgeKey: "leads" },
+  { href: "/admin/applications", label: "Applications", badgeKey: "applications" },
   { href: "/admin/clients", label: "Clients" },
   { href: "/admin/projects", label: "Projects" },
   { href: "/admin/deliverables", label: "Deliverables" },
-  { href: "/admin/calls", label: "Calls" },
+  { href: "/admin/calls", label: "Calls", badgeKey: "calls" },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ badges }: { badges: Record<string, number> }) {
   const pathname = usePathname();
 
   return (
@@ -25,9 +25,8 @@ export default function Sidebar() {
 
       <nav className="admin-nav">
         {links.map((l) => {
-          const active = l.exact
-            ? pathname === l.href
-            : pathname.startsWith(l.href);
+          const active = l.exact ? pathname === l.href : pathname.startsWith(l.href);
+          const count = l.badgeKey ? badges[l.badgeKey] ?? 0 : 0;
           return (
             <Link
               key={l.href}
@@ -35,6 +34,7 @@ export default function Sidebar() {
               className={active ? "admin-nav-link active" : "admin-nav-link"}
             >
               {l.label}
+              {count > 0 && <span className="admin-nav-badge">{count}</span>}
             </Link>
           );
         })}

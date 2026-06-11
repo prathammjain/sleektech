@@ -1,5 +1,7 @@
 import "server-only";
 import { getSupabaseAdmin } from "./supabase/server";
+import type { AdminEntity } from "./types";
+import type { RelationOption } from "./admin-config";
 
 export type FetchResult<T> = {
   rows: T[];
@@ -63,6 +65,52 @@ export async function fetchCounts(
     }),
   );
   return { counts, configured: true };
+}
+
+/** Fetch {id, label} options for a relation dropdown (clients, projects). */
+export async function fetchRelationOptions(
+  entity: AdminEntity,
+): Promise<RelationOption[]> {
+  if (!isConfigured()) return [];
+  const labelCol = entity === "projects" || entity === "deliverables" ? "title" : "name";
+  try {
+    const supabase = getSupabaseAdmin();
+    const { data, error } = await supabase
+      .from(entity)
+      .select(`id, ${labelCol}`)
+      .order("created_at", { ascending: false });
+    if (error) throw error;
+    return (data ?? []).map((r) => {
+      const rec = r as Record<string, unknown>;
+      return { id: String(rec.id), label: String(rec[labelCol] ?? rec.id) };
+    });
+  } catch (err) {
+    console.error(`fetch relation ${entity} failed:`, err);
+    return [];
+  }
+}
+
+/** Counts of items that need attention, for the sidebar badges. */
+export async function fetchSidebarBadges(): Promise<Record<string, number>> {
+  const empty = { leads: 0, applications: 0, calls: 0 };
+  if (!isConfigured()) return empty;
+  try {
+    const supabase = getSupabaseAdmin();
+    const head = (table: string, col: string, val: string) =>
+      supabase.from(table).select("*", { count: "exact", head: true }).eq(col, val);
+    const [leads, apps, calls] = await Promise.all([
+      head("leads", "status", "new"),
+      head("applications", "status", "new"),
+      head("calls", "status", "scheduled"),
+    ]);
+    return {
+      leads: leads.count ?? 0,
+      applications: apps.count ?? 0,
+      calls: calls.count ?? 0,
+    };
+  } catch {
+    return empty;
+  }
 }
 
 export { isConfigured };
