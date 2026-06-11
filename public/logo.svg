@@ -1,0 +1,11 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SleekTech logo">
+  <defs>
+    <linearGradient id="flame" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFC700"/>
+      <stop offset="50%" stop-color="#FF6A1A"/>
+      <stop offset="100%" stop-color="#FF2D4F"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="56" fill="#14171E"/>
+  <circle cx="128" cy="128" r="58" fill="url(#flame)"/>
+</svg>

@@ -1,12 +1,18 @@
 {
-  "name": "temp_next_app",
-  "version": "0.1.0",
+  "name": "sleektech",
+  "version": "1.0.0",
   "private": true,
+  "description": "SleekTech marketing site and internal admin dashboard. Next.js 16, React 19, Supabase.",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "next dev -p 7001",
     "build": "next build",
     "start": "next start -p 7001",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.108.1",

@@ -2,7 +2,7 @@ import { fetchRows } from "@/lib/admin-data";
 import { NotConfiguredBanner, ErrorBanner, EmptyState } from "@/components/admin/Banners";
 import StatusSelect from "@/components/admin/StatusSelect";
 import { STATUS_OPTIONS, type Project, type Client } from "@/lib/types";
-import { fmtDate, dash } from "@/lib/format";
+import { fmtDate } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 

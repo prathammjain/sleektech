@@ -40,7 +40,6 @@ export default function ChatbotDemo() {
       new Promise<void>((res) => timers.push(setTimeout(res, ms)));
 
     (async () => {
-      // eslint-disable-next-line no-constant-condition
       while (!cancelled) {
         setShown([]);
         setTyping(false);

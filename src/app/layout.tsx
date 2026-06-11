@@ -1,10 +1,12 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { SITE } from "@/lib/site";
 import MeshBackground from "@/components/MeshBackground";
 import ScrollAura from "@/components/ScrollAura";
 import ScrollReveal from "@/components/ScrollReveal";
 import SiteEffects from "@/components/SiteEffects";
+import StructuredData from "@/components/StructuredData";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -29,9 +31,57 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SleekTech — Engineering Collective",
-  description:
-    "A modern engineering collective where companies get execution-ready teams and engineers earn through real projects — not broken hiring pipelines.",
+  metadataBase: new URL(SITE.url),
+  title: {
+    default: SITE.title,
+    template: `%s | ${SITE.name}`,
+  },
+  description: SITE.description,
+  applicationName: SITE.name,
+  keywords: [...SITE.keywords],
+  authors: [{ name: SITE.name, url: SITE.url }],
+  creator: SITE.name,
+  publisher: SITE.name,
+  category: "technology",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    siteName: SITE.name,
+    title: SITE.title,
+    description: SITE.description,
+    url: SITE.url,
+    locale: SITE.locale,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE.title,
+    description: SITE.description,
+    creator: SITE.twitterHandle,
+    site: SITE.twitterHandle,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  formatDetection: { telephone: false, address: false, email: false },
+  // To verify in Google Search Console, paste your token here:
+  // verification: { google: "<token>" },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#14171E",
+  colorScheme: "dark",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
@@ -45,6 +95,7 @@ export default function RootLayout({
       className={`${inter.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`}
     >
       <body>
+        <StructuredData />
         <MeshBackground />
         <ScrollAura />
         <SiteEffects />
