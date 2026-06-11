@@ -2,10 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SITE } from "@/lib/site";
-import MeshBackground from "@/components/MeshBackground";
-import ScrollAura from "@/components/ScrollAura";
-import ScrollReveal from "@/components/ScrollReveal";
-import SiteEffects from "@/components/SiteEffects";
+import SiteChrome from "@/components/SiteChrome";
 import StructuredData from "@/components/StructuredData";
 
 const inter = Inter({
@@ -96,11 +93,8 @@ export default function RootLayout({
     >
       <body>
         <StructuredData />
-        <MeshBackground />
-        <ScrollAura />
-        <SiteEffects />
+        <SiteChrome />
         {children}
-        <ScrollReveal />
       </body>
     </html>
   );
