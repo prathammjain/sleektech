@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import MeshBackground from "@/components/MeshBackground";
+import ScrollAura from "@/components/ScrollAura";
 import ScrollReveal from "@/components/ScrollReveal";
 import SiteEffects from "@/components/SiteEffects";
 
@@ -45,6 +46,7 @@ export default function RootLayout({
     >
       <body>
         <MeshBackground />
+        <ScrollAura />
         <SiteEffects />
         {children}
         <ScrollReveal />

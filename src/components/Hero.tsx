@@ -1,7 +1,15 @@
 "use client";
 
-import { motion, useReducedMotion, type Variants } from "motion/react";
+import { useRef } from "react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  type Variants,
+} from "motion/react";
 import ApplyModal from "./ApplyModal";
+import RotatingWord from "./motion/RotatingWord";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -10,6 +18,8 @@ const LINES: { text: string; accent?: boolean }[][] = [
   [{ text: "We" }, { text: "build" }, { text: "software" }],
   [{ text: "that", accent: true }, { text: "just", accent: true }, { text: "works.", accent: true }],
 ];
+
+const ROTATING = ["websites", "web apps", "mobile apps", "automations", "AI agents"];
 
 const container: Variants = {
   hidden: {},
@@ -33,12 +43,23 @@ const fade: Variants = {
 
 export default function Hero() {
   const reduced = useReducedMotion();
+  const ref = useRef<HTMLElement>(null);
+
+  // Scroll-linked parallax: the hero copy drifts up and fades as you scroll.
+  // Scroll-driven, so it works on touch devices where the cursor FX don't.
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  const y = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : 130]);
+  const opacity = useTransform(scrollYProgress, [0, 0.75], [1, reduced ? 1 : 0]);
 
   return (
-    <section id="hero" className="hero-section">
+    <section id="hero" className="hero-section" ref={ref}>
       <div className="hero-grid">
         <motion.div
           className="hero-copy"
+          style={reduced ? undefined : { y, opacity }}
           variants={reduced ? undefined : container}
           initial={reduced ? undefined : "hidden"}
           animate={reduced ? undefined : "show"}
@@ -62,6 +83,11 @@ export default function Hero() {
               </span>
             ))}
           </h1>
+
+          <motion.p className="hero-rotor-line" variants={reduced ? undefined : fade}>
+            <span className="hero-rotor-label">Currently shipping</span>
+            <RotatingWord words={ROTATING} />
+          </motion.p>
 
           <motion.p variants={reduced ? undefined : fade}>
             Websites, web and mobile apps, automations and the AI inside them. We
@@ -92,6 +118,10 @@ export default function Hero() {
             />
           </motion.div>
         </motion.div>
+      </div>
+
+      <div className="hero-scroll-hint" aria-hidden="true">
+        <span className="hero-scroll-dot" />
       </div>
     </section>
   );

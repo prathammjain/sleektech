@@ -2156,6 +2156,176 @@ footer p {
   .pipeline-label { font-size: 9.5px; }
 }
 
+/* =========================================================
+   Motion level-up: scroll aura, rotating word, gyro tilt,
+   animated borders, floating cards, scroll hint
+   ========================================================= */
+
+/* Scroll-reactive aurora behind everything */
+.scroll-aura {
+  position: fixed;
+  inset: -10% -10% -10% -10%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.aura-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(150px);
+  will-change: transform;
+}
+.aura-blob-1 {
+  width: 60vw; height: 60vw;
+  max-width: 760px; max-height: 760px;
+  top: 6%; left: -8%;
+  background: radial-gradient(circle, rgba(255, 45, 79, 0.16), transparent 66%);
+}
+.aura-blob-2 {
+  width: 52vw; height: 52vw;
+  max-width: 680px; max-height: 680px;
+  bottom: 2%; right: -10%;
+  background: radial-gradient(circle, rgba(255, 199, 0, 0.12), transparent 68%);
+}
+
+/* Rotating word in the hero */
+.hero-rotor-line {
+  display: inline-flex !important;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--font-mono), monospace;
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 22px !important;
+}
+.hero-rotor-label { color: var(--faint); }
+.rotor {
+  position: relative;
+  display: inline-block;
+  min-width: 7.5em;
+}
+.rotor-word {
+  display: inline-block;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  background: var(--gradient);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  will-change: transform, opacity, filter;
+}
+
+/* Scroll hint at the bottom of the hero */
+.hero-scroll-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 26px;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 36px;
+  border: 1.5px solid var(--hairline-3);
+  border-radius: 999px;
+  display: flex;
+  justify-content: center;
+  padding-top: 7px;
+  z-index: 2;
+}
+.hero-scroll-dot {
+  width: 4px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--gradient);
+  animation: scroll-dot 1.8s var(--ease) infinite;
+}
+@keyframes scroll-dot {
+  0% { transform: translateY(0); opacity: 0; }
+  30% { opacity: 1; }
+  70% { transform: translateY(11px); opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* Gyroscope tilt — apply the tilt transform without needing :hover */
+body.gyro-active [data-tilt] {
+  transform: perspective(900px) rotateX(var(--tx)) rotateY(var(--ty));
+}
+
+/* Animated conic glow border (showy) */
+@property --bd-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes bd-spin { to { --bd-angle: 360deg; } }
+
+.service-card::after,
+.lab-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.4px;
+  background: conic-gradient(
+    from var(--bd-angle),
+    transparent 0deg,
+    var(--rose) 70deg,
+    var(--rust) 130deg,
+    transparent 210deg,
+    transparent 360deg
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.45s var(--ease);
+}
+.service-card:hover::after { opacity: 1; animation: bd-spin 4s linear infinite; }
+.lab-card::after { opacity: 0.55; animation: bd-spin 9s linear infinite; }
+.lab-card:hover::after { opacity: 0.9; animation-duration: 5s; }
+
+/* Floating / breathing demo screens */
+.wf, .term, .chat {
+  animation: float-card 7s var(--ease) infinite;
+}
+.term { animation-delay: -2.3s; }
+.chat { animation-delay: -4.6s; }
+@keyframes float-card {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+/* Tap feedback for touch (cards) */
+.service-card:active,
+.lab-card:active,
+.feature-card:active,
+.quote-card:active { transform: scale(0.985); }
+
+/* Kinetic sheen sweeping across the headline once on load */
+.hero-headline::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.12) 50%,
+    transparent 65%
+  );
+  background-size: 250% 100%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  animation: headline-sheen 3.4s var(--ease) 0.9s 1;
+}
+.hero-headline { position: relative; overflow: hidden; padding-bottom: 0.12em; }
+@keyframes headline-sheen {
+  from { background-position: 180% 0; }
+  to { background-position: -80% 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
@@ -2164,7 +2334,10 @@ footer p {
     scroll-behavior: auto !important;
   }
   .mesh-orb,
-  .marquee-track { animation: none !important; }
+  .marquee-track,
+  .wf, .term, .chat { animation: none !important; }
+  .service-card::after, .lab-card::after, .hero-headline::after { display: none !important; }
+  .scroll-aura, .hero-scroll-hint { display: none !important; }
   [data-reveal] { opacity: 1 !important; transform: none !important; }
   .scroll-progress { display: none; }
 }
