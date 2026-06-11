@@ -81,20 +81,49 @@ export default function SiteEffects() {
       cleanups.push(() => hero.removeEventListener("mousemove", onMove));
     }
 
-    /* ---------- Auto-sweeping spotlight (until a pointer/gyro takes over) ---------- */
+    /* ---------- Auto-sweeping spotlight (until a pointer/gyro takes over) ----------
+       Only runs while the hero is on screen, the tab is visible, and no pointer
+       has taken over — so it never burns a rAF loop in the background. */
     let rafId = 0;
+    let sweeping = false;
+    let heroVisible = true;
     const t0 = performance.now();
+
+    const shouldSweep = () =>
+      Boolean(hero) && !pointerActive && heroVisible && !document.hidden;
+
     const autoSweep = (t: number) => {
-      if (hero && !pointerActive) {
-        const s = (t - t0) / 1000;
-        const mx = 50 + Math.sin(s * 0.42) * 32;
-        const my = 40 + Math.cos(s * 0.31) * 24;
-        hero.style.setProperty("--mx", `${mx}%`);
-        hero.style.setProperty("--my", `${my}%`);
+      if (!shouldSweep()) {
+        sweeping = false;
+        return;
       }
+      const s = (t - t0) / 1000;
+      hero!.style.setProperty("--mx", `${50 + Math.sin(s * 0.42) * 32}%`);
+      hero!.style.setProperty("--my", `${40 + Math.cos(s * 0.31) * 24}%`);
       rafId = requestAnimationFrame(autoSweep);
     };
-    rafId = requestAnimationFrame(autoSweep);
+    const startSweep = () => {
+      if (sweeping || !shouldSweep()) return;
+      sweeping = true;
+      rafId = requestAnimationFrame(autoSweep);
+    };
+
+    if (hero) {
+      const heroIO = new IntersectionObserver(
+        ([entry]) => {
+          heroVisible = entry.isIntersecting;
+          startSweep();
+        },
+        { threshold: 0 },
+      );
+      heroIO.observe(hero);
+      cleanups.push(() => heroIO.disconnect());
+    }
+    const onVisible = () => startSweep();
+    document.addEventListener("visibilitychange", onVisible);
+    cleanups.push(() => document.removeEventListener("visibilitychange", onVisible));
+
+    startSweep();
     cleanups.push(() => cancelAnimationFrame(rafId));
 
     /* ---------- 3D tilt on cards (cursor) ---------- */

@@ -33,65 +33,89 @@ declare global {
  * via Spotify's iframe API. "Open on Spotify" deep-links to full tracks.
  */
 export default function StudioPlayer() {
+  const containerRef = useRef<HTMLDivElement>(null);
   const embedRef = useRef<HTMLDivElement>(null);
   const controller = useRef<SpotifyController | null>(null);
   const [ready, setReady] = useState(false);
   const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
     let cancelled = false;
+    let started = false;
+    let fallback: ReturnType<typeof setTimeout> | undefined;
 
-    window.onSpotifyIframeApiReady = (api) => {
-      if (cancelled || !embedRef.current) return;
-      api.createController(
-        embedRef.current,
-        { uri: `spotify:playlist:${PLAYLIST_ID}`, width: "100%", height: 152 },
-        (ctrl) => {
-          if (cancelled) return;
-          controller.current = ctrl;
-          setReady(true);
-          ctrl.addListener("playback_update", (e) => {
-            if (e?.data && typeof e.data.isPaused === "boolean") {
-              setPlaying(!e.data.isPaused);
-            }
-          });
-        },
-      );
+    // Only load Spotify once the player is near the viewport — keeps it off the
+    // initial page load entirely (the player sits at the bottom of the page).
+    const start = () => {
+      if (started) return;
+      started = true;
+
+      window.onSpotifyIframeApiReady = (api) => {
+        if (cancelled || !embedRef.current) return;
+        api.createController(
+          embedRef.current,
+          { uri: `spotify:playlist:${PLAYLIST_ID}`, width: "100%", height: 152 },
+          (ctrl) => {
+            if (cancelled) return;
+            controller.current = ctrl;
+            setReady(true);
+            ctrl.addListener("playback_update", (e) => {
+              if (e?.data && typeof e.data.isPaused === "boolean") {
+                setPlaying(!e.data.isPaused);
+              }
+            });
+          },
+        );
+      };
+
+      if (!document.getElementById("spotify-iframe-api")) {
+        const s = document.createElement("script");
+        s.id = "spotify-iframe-api";
+        s.src = "https://open.spotify.com/embed/iframe-api/v1";
+        s.async = true;
+        document.body.appendChild(s);
+      }
+
+      // Fallback: if the API hasn't built a player within a few seconds
+      // (blocked / slow), drop in a plain embed so audio still works.
+      fallback = setTimeout(() => {
+        const host = embedRef.current;
+        if (cancelled || !host || host.querySelector("iframe")) return;
+        const f = document.createElement("iframe");
+        f.src = `https://open.spotify.com/embed/playlist/${PLAYLIST_ID}?utm_source=generator&theme=0`;
+        f.width = "100%";
+        f.height = "152";
+        f.loading = "lazy";
+        f.style.border = "0";
+        f.allow = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture";
+        host.appendChild(f);
+      }, 3500);
     };
 
-    if (!document.getElementById("spotify-iframe-api")) {
-      const s = document.createElement("script");
-      s.id = "spotify-iframe-api";
-      s.src = "https://open.spotify.com/embed/iframe-api/v1";
-      s.async = true;
-      document.body.appendChild(s);
-    }
-
-    // Fallback: if the iframe API hasn't created a player within a few seconds
-    // (blocked, slow network), drop in a plain embed so audio still works.
-    const fallback = setTimeout(() => {
-      const host = embedRef.current;
-      if (cancelled || !host || host.querySelector("iframe")) return;
-      const f = document.createElement("iframe");
-      f.src = `https://open.spotify.com/embed/playlist/${PLAYLIST_ID}?utm_source=generator&theme=0`;
-      f.width = "100%";
-      f.height = "152";
-      f.loading = "lazy";
-      f.style.border = "0";
-      f.allow = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture";
-      host.appendChild(f);
-    }, 3500);
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          start();
+          io.disconnect();
+        }
+      },
+      { rootMargin: "500px" },
+    );
+    io.observe(el);
 
     return () => {
       cancelled = true;
-      clearTimeout(fallback);
+      io.disconnect();
+      if (fallback) clearTimeout(fallback);
     };
   }, []);
 
   const toggle = () => controller.current?.togglePlay();
 
   return (
-    <div className="studio-player">
+    <div className="studio-player" ref={containerRef}>
       <div className="sp-face">
         <button
           type="button"
