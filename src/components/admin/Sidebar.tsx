@@ -11,6 +11,7 @@ const links: { href: string; label: string; exact?: boolean; badgeKey?: string }
   { href: "/admin/projects", label: "Projects" },
   { href: "/admin/deliverables", label: "Deliverables" },
   { href: "/admin/calls", label: "Calls", badgeKey: "calls" },
+  { href: "/admin/testimonials", label: "Testimonials" },
 ];
 
 export default function Sidebar({ badges }: { badges: Record<string, number> }) {

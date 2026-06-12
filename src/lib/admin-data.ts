@@ -1,7 +1,10 @@
 import "server-only";
+import { unstable_cache } from "next/cache";
 import { getSupabaseAdmin } from "./supabase/server";
 import type { AdminEntity } from "./types";
 import type { RelationOption } from "./admin-config";
+
+export const TESTIMONIALS_TAG = "testimonials";
 
 export type FetchResult<T> = {
   rows: T[];
@@ -110,6 +113,57 @@ export async function fetchSidebarBadges(): Promise<Record<string, number>> {
     };
   } catch {
     return empty;
+  }
+}
+
+/** Fetch active testimonials ordered by display_order. image_url is a public URL. */
+async function queryTestimonials() {
+  if (!isConfigured()) return [];
+  try {
+    const supabase = getSupabaseAdmin();
+    const { data, error } = await supabase
+      .from("testimonials")
+      .select("*")
+      .eq("active", true)
+      .order("display_order", { ascending: true })
+      .limit(5);
+    if (error) throw error;
+    return data ?? [];
+  } catch (err) {
+    console.error("fetch testimonials failed:", err);
+    return [];
+  }
+}
+
+/**
+ * Cached active testimonials for the public landing page. Cached so the page
+ * stays static/ISR; busted on demand via revalidateTag(TESTIMONIALS_TAG) from
+ * the admin mutation routes, with a 10-min safety revalidate.
+ */
+export const fetchTestimonials = unstable_cache(
+  async () => ({ rows: await queryTestimonials() }),
+  ["public-testimonials"],
+  { revalidate: 600, tags: [TESTIMONIALS_TAG] },
+);
+
+/** Fetch ALL testimonials (active + inactive) for the admin. */
+export async function fetchAllTestimonials() {
+  if (!isConfigured()) return { rows: [], configured: false, error: null };
+  try {
+    const supabase = getSupabaseAdmin();
+    const { data, error } = await supabase
+      .from("testimonials")
+      .select("*")
+      .order("display_order", { ascending: true });
+    if (error) throw error;
+    return { rows: data ?? [], configured: true, error: null };
+  } catch (err) {
+    console.error("fetch all testimonials failed:", err);
+    return {
+      rows: [],
+      configured: true,
+      error: err instanceof Error ? err.message : "Query failed.",
+    };
   }
 }
 

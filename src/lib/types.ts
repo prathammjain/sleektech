@@ -87,6 +87,29 @@ export type Call = {
   notes: string | null;
 };
 
+export type TestimonialPlatform =
+  | "linkedin"
+  | "twitter"
+  | "instagram"
+  | "website"
+  | "other";
+
+export type Testimonial = {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  name: string;
+  role: string | null;
+  company: string | null;
+  quote: string;
+  caption: string | null;
+  image_url: string | null;
+  social_url: string | null;
+  social_platform: TestimonialPlatform | null;
+  display_order: number;
+  active: boolean;
+};
+
 // Admin entities that expose a PATCH-able status, keyed by URL segment.
 export const STATUS_OPTIONS = {
   applications: ["new", "reviewing", "accepted", "rejected"],

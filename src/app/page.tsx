@@ -5,6 +5,13 @@ import ServicesShowcase from "@/components/ServicesShowcase";
 import StatsPipeline from "@/components/StatsPipeline";
 import AILab from "@/components/ai/AILab";
 import StudioPlayer from "@/components/StudioPlayer";
+import TestimonialsSection from "@/components/TestimonialsSection";
+import { fetchTestimonials } from "@/lib/admin-data";
+import type { Testimonial } from "@/lib/types";
+
+// Statically rendered, revalidated every 10 min. Testimonial changes from the
+// admin also trigger on-demand revalidation, so updates show within seconds.
+export const revalidate = 600;
 
 const companySteps = [
   { n: "01", title: "Submit your project", body: "Drop us a brief. Scope, stack, timelines, anything you have." },
@@ -40,13 +47,10 @@ const tickerItems = [
   "API Integrations",
 ];
 
-const earlyResults = [
-  { quote: "Built MVP in 3 weeks with a 4-person team.", who: "Seed-stage founder" },
-  { quote: "Cut development cost by 40%.", who: "Series A operations lead" },
-  { quote: "Shipped faster than our in-house team.", who: "VP Engineering, fintech" },
-];
+export default async function Home() {
+  const { rows } = await fetchTestimonials();
+  const testimonials = rows as Testimonial[];
 
-export default function Home() {
   return (
     <ApplyModalProvider>
       <div className="landing-shell">
@@ -164,21 +168,8 @@ export default function Home() {
             </div>
           </section>
 
-          {/* SOCIAL PROOF */}
-          <section id="results" className="section" data-reveal>
-            <div className="section-header">
-              <div className="tag">Early results</div>
-              <h2>Receipts beat promises.</h2>
-            </div>
-            <div className="quote-grid">
-              {earlyResults.map((r) => (
-                <figure key={r.quote} className="n-card quote-card">
-                  <blockquote>&ldquo;{r.quote}&rdquo;</blockquote>
-                  <figcaption>{r.who}</figcaption>
-                </figure>
-              ))}
-            </div>
-          </section>
+          {/* SOCIAL PROOF — testimonials managed from the admin dashboard */}
+          <TestimonialsSection testimonials={testimonials} />
 
           {/* THE MODEL — compact "about" (problem + solution + why, condensed) */}
           <section id="why" className="section about-band" data-reveal>

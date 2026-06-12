@@ -2515,3 +2515,127 @@ body.gyro-active [data-tilt] {
 .status-card h1 { font-size: clamp(24px, 4vw, 36px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; }
 .status-card p { color: var(--muted); font-size: 15px; line-height: 1.6; }
 .status-card .btn-primary { margin-top: 8px; }
+
+/* =========================================================
+   Testimonials — "Receipts beat promises"
+   ========================================================= */
+.testi-layout { display: flex; flex-direction: column; gap: 18px; }
+.testi-stack {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.testi-card {
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+}
+.testi-card--featured {
+  position: relative;
+  overflow: hidden;
+  padding: 38px 40px;
+  gap: 22px;
+}
+.testi-card--featured::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--gradient);
+}
+
+.testi-quote-wrap { position: relative; }
+.testi-open-quote {
+  position: absolute;
+  top: -22px;
+  left: -8px;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 70px;
+  line-height: 1;
+  color: var(--rust);
+  opacity: 0.22;
+  pointer-events: none;
+}
+.testi-quote {
+  position: relative;
+  font-family: var(--font-serif), Georgia, serif;
+  font-style: italic;
+  font-size: clamp(17px, 1.7vw, 20px);
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.testi-card--featured .testi-quote {
+  font-size: clamp(22px, 3vw, 31px);
+  line-height: 1.36;
+}
+
+.testi-caption {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-mono), monospace;
+  font-size: 12.5px;
+  letter-spacing: 0.01em;
+  color: var(--text-2);
+}
+.testi-caption-dot {
+  width: 6px; height: 6px;
+  border-radius: 999px;
+  background: var(--gradient);
+  box-shadow: 0 0 8px rgba(255, 45, 79, 0.5);
+  flex-shrink: 0;
+}
+
+.testi-meta {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-top: auto;
+  border-top: 1px solid var(--hairline);
+  padding-top: 18px;
+}
+.testi-avatar {
+  width: 44px; height: 44px;
+  border-radius: 999px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid var(--hairline-2);
+  background: var(--surface-2);
+}
+.testi-avatar--lg { width: 56px; height: 56px; }
+.testi-avatar--initials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono), monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--rose);
+  background: var(--rose-soft);
+}
+.testi-meta-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.testi-name { font-size: 14.5px; font-weight: 600; color: var(--text); }
+.testi-role { font-size: 12.5px; color: var(--muted); }
+.testi-social {
+  margin-left: auto;
+  width: 34px; height: 34px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  border: 1px solid var(--hairline-2);
+  background: var(--surface);
+  transition: all 0.2s var(--ease);
+  flex-shrink: 0;
+}
+.testi-social:hover {
+  color: var(--rose);
+  border-color: rgba(255, 45, 79, 0.4);
+  background: var(--rust-soft);
+}
+.testi-social-icon { width: 15px; height: 15px; }
