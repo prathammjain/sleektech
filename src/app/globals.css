@@ -1749,6 +1749,67 @@ footer p {
 }
 
 /* =========================================================
+   What-we-build — swipeable carousel on phones
+   Desktop keeps the grid above. At <=640px the grid becomes
+   a full-bleed horizontal scroll-snap slider (one card visible,
+   the next peeking) with a dot indicator below. The "swipe me"
+   nudge on load is driven from ServicesShowcase.tsx.
+   ========================================================= */
+.services-carousel { position: relative; }
+.services-dots { display: none; }
+
+@media (max-width: 640px) {
+  .services-grid {
+    display: flex;
+    grid-template-columns: none;
+    gap: 14px;
+    margin: 0 -22px;
+    padding: 6px 22px 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 22px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .services-grid::-webkit-scrollbar { width: 0; height: 0; display: none; }
+
+  .services-grid > .service-card {
+    flex: 0 0 84%;
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+
+  .services-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  .services-dot {
+    width: 7px;
+    height: 7px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: var(--hairline-3);
+    cursor: pointer;
+    transition:
+      width 0.35s var(--ease),
+      background 0.35s var(--ease),
+      box-shadow 0.35s var(--ease);
+  }
+
+  .services-dot[aria-current="true"] {
+    width: 22px;
+    background: var(--gradient);
+    box-shadow: 0 0 10px rgba(255, 45, 79, 0.5);
+  }
+}
+
+/* =========================================================
    How-we-deliver pipeline + count-up stats
    ========================================================= */
 .pipeline-section { padding-top: 40px; }
